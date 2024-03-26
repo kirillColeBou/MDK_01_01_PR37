@@ -10,8 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Data\Interfaces\" />
+    <Folder Include="Data\Mocks\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
