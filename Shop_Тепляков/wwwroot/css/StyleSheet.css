@@ -1,4 +1,8 @@
-﻿body {
+﻿*{
+    font-family: Arial;
+}
+
+body {
     padding: 0px;
     margin: 0px;
 }
@@ -10,17 +14,23 @@
 }
 
 .header img {
-    width: 40px;
+    height: 40px;
     margin: 10px;
     float: left;
 }
 
-.header img {
+.header search {
     margin-top: 10px;
     height: 40px;
     width: 50%;
     border: none;
     padding: 0px 10px;
+}
+
+.header .basket{
+    width: 20px;
+    margin: 20px;
+    float: right;
 }
 
 .item {
@@ -30,11 +40,23 @@
 
 .item img {
     padding: 10px;
+    height: 60px;
     width: 100px;
     float: left;
 }
 
 .item data {
+    margin-left: 120px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.categorys {
+    box-shadow: 2px 2px 2px #00000038;
+    margin-bottom: 10px;
+}
+
+.categorys data {
     margin-left: 120px;
     padding-top: 5px;
     padding-bottom: 5px;

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Shop_Тепляков.Data.Models.Categorys>
+
+@{
+    Layout = "_Layout";
+}
+<h2>Все категории</h2>
+@{
+    foreach (var categorys in Model)
+    {
+        <div class="categorys">
+            <div class="data">
+                <h3>Категория: @categorys.Name</h3>
+                <div>Описание: @categorys.Description</div>
+            </div>
+        </div>
+    }
+}
