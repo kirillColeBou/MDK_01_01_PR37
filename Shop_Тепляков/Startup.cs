@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop_Тепляков.Data.Interfaces;
@@ -26,7 +27,9 @@ namespace Shop_Тепляков
         {
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
-            app.UseStaticFiles();
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".less"] = "text/css";
+            app.UseStaticFiles(new StaticFileOptions { ContentTypeProvider = provider});
             app.UseMvcWithDefaultRoute();
         }
     }

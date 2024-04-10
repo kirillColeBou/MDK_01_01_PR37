@@ -1,0 +1,95 @@
+﻿@font: Arial;
+@padding: 0px;
+@margin: 0px;
+@height: 60px;
+@background: #007eff;
+@box-shadow: 0px 5px 5px #00000038;
+@img-height: 40px;
+@img-margin: 10px;
+@search-margin-top: 10px;
+@search-height: 40px;
+@search-width: 50%;
+@search-border: none;
+@search-padding: 0px 10px;
+@basket-width: 20px;
+@basket-margin: 20px;
+@item-box-shadow: 2px 2px 2px #00000038;
+@item-margin-bottom: 10px;
+@item-img-padding: 10px;
+@item-img-width: 100px;
+@item-data-margin-left: 120px;
+@item-data-padding-top: 5px;
+@item-data-padding-bottom: 5px;
+@categorys-box-shadow: 2px 2px 2px #00000038;
+@categorys-margin-bottom: 10px;
+@categorys-data-margin-left: 120px;
+@categorys-data-padding-top: 5px;
+@categorys-data-padding-bottom: 5px;
+@h3-margin: 0px;
+
+* {
+    font-family: @font;
+}
+
+body {
+    padding: @padding;
+    margin: @margin;
+}
+
+.header {
+    height: @height;
+    background: @background;
+    box-shadow: @box-shadow;
+
+    img {
+        height: @img-height;
+        margin: @img-margin;
+        float: left;
+    }
+
+    search {
+        margin-top: @search-margin-top;
+        height: @search-height;
+        width: @search-width;
+        border: @search-border;
+        padding: @search-padding;
+    }
+
+    .basket {
+        width: @basket-width;
+        margin: @basket-margin;
+        float: right;
+    }
+}
+
+.item {
+    box-shadow: @item-box-shadow;
+    margin-bottom: @item-margin-bottom;
+
+    img {
+        padding: @item-img-padding;
+        width: @item-img-width;
+        float: left;
+    }
+
+    data {
+        margin-left: @item-data-margin-left;
+        padding-top: @item-data-padding-top;
+        padding-bottom: @item-data-padding-bottom;
+    }
+}
+
+.categorys {
+    box-shadow: @categorys-box-shadow;
+    margin-bottom: @categorys-margin-bottom;
+
+    data {
+        margin-left: @categorys-data-margin-left;
+        padding-top: @categorys-data-padding-top;
+        padding-bottom: @categorys-data-padding-bottom;
+    }
+}
+
+h3 {
+    margin: @h3-margin;
+}
