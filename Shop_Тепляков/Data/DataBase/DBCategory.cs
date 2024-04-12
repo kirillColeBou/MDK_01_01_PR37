@@ -21,7 +21,7 @@ namespace Shop_Тепляков.Data.DataBase
                     {
                         Id = CategorysReader.IsDBNull(0) ? -1 : CategorysReader.GetInt32(0),
                         Name = CategorysReader.IsDBNull(1) ? null : CategorysReader.GetString(1),
-                        Description = CategorysReader.IsDBNull(2) ? null : CategorysReader.GetString(2),
+                        Description = CategorysReader.IsDBNull(2) ? null : CategorysReader.GetString(2)
                     });
                 }
                 return categorys;
