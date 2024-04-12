@@ -4,15 +4,16 @@
 @height: 60px;
 @background: #007eff;
 @box-shadow: 0px 5px 5px #00000038;
-@img-height: 40px;
+@img-width: 40px;
 @img-margin: 10px;
 @search-margin-top: 10px;
 @search-height: 40px;
 @search-width: 50%;
 @search-border: none;
 @search-padding: 0px 10px;
+@basket-height: 20px;
 @basket-width: 20px;
-@basket-margin: 20px;
+@basket-margin: 10px;
 @item-box-shadow: 2px 2px 2px #00000038;
 @item-margin-bottom: 10px;
 @item-img-padding: 10px;
@@ -42,24 +43,22 @@ body {
     box-shadow: @box-shadow;
 
     img {
-        height: @img-height;
+        width: @img-width;
         margin: @img-margin;
         float: left;
     }
 
-    search {
+    .basket {
+        float: right;
+    }
+}
+
+input.search {
         margin-top: @search-margin-top;
         height: @search-height;
         width: @search-width;
         border: @search-border;
         padding: @search-padding;
-    }
-
-    .basket {
-        width: @basket-width;
-        margin: @basket-margin;
-        float: right;
-    }
 }
 
 .item {
@@ -69,6 +68,7 @@ body {
     img {
         padding: @item-img-padding;
         width: @item-img-width;
+        height: 100px;
         float: left;
     }
 
