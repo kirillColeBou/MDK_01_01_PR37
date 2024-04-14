@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace Shop_Тепляков.Data.DataBase
 {
-    public class DBItems
+    public class DBItems : Interfaces.IItems
     {
         public IEnumerable<Models.Categorys> Categorys = new DBCategory().AllCategorys;
 

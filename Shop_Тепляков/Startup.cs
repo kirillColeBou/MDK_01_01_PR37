@@ -18,8 +18,8 @@ namespace Shop_Тепляков
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICategorys, MockCategorys>();
-            services.AddTransient<IItems, MockItems>();
+            services.AddTransient<ICategorys, Data.DataBase.DBCategory>();
+            services.AddTransient<IItems, Data.DataBase.DBItems> ();
             services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
