@@ -9,10 +9,10 @@ namespace Shop_Тепляков.Controllers
 
         public CategorysController(ICategorys IAllCategorys) => this.IAllCategorys = IAllCategorys;
 
-        public ViewResult List()
+        public ViewResult List(string search)
         {
             ViewBag.Title = "Страница с категориями";
-            var cars = IAllCategorys.AllCategorys;
+            var cars = IAllCategorys.FindCategorys(search);
             return View(cars);
         }
     }

@@ -18,29 +18,20 @@ namespace Shop_Тепляков.Controllers
             this.IAllCategorys = IAllCategorys;
         }
 
-        public ViewResult List(int id = 0, string sortBy = "0", string searchString = "")
+        public ViewResult List(int id = 0, string sortBy = "0", string search = "")
         {
             ViewBag.Title = "Страница с предметами";
             var items = IAllItems.AllItems;
-            if (id != 0)
-            {
-                items = items.Where(i => i.Category.Id == id);
-            }
-            if (!string.IsNullOrEmpty(searchString))
+            if (id != 0) items = items.Where(i => i.Category.Id == id);
+            if (!string.IsNullOrEmpty(search))
             {
                 DBItems temp = new DBItems();
-                items = temp.FindItems(searchString);
+                items = temp.FindItems(search);
                 ViewBag.Title = "Результаты поиска";
-                ViewBag.SearchString = searchString;
+                ViewBag.Items = search;
             }
-            if (sortBy == "desc")
-            {
-                items = items.OrderByDescending(i => i.Price);
-            }
-            else if (sortBy == "asc")
-            {
-                items = items.OrderBy(i => i.Price);
-            }
+            if (sortBy == "desc") items = items.OrderByDescending(i => i.Price);
+            else if (sortBy == "asc") items = items.OrderBy(i => i.Price);
             VMItem.Items = items;
             VMItem.Categorys = IAllCategorys.AllCategorys;
             VMItem.SelectCategory = id;

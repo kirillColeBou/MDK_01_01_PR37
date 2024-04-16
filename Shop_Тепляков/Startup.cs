@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop_Тепляков.Data.Interfaces;
-using Shop_Тепляков.Data.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;

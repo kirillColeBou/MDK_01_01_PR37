@@ -43,9 +43,7 @@ namespace Shop_Тепляков.Data.DataBase
             string query = "SELECT * FROM Shop.Items WHERE Name LIKE @search OR Description LIKE @search;";
             MySqlCommand command = new MySqlCommand(query, MySqlConnection);
             command.Parameters.AddWithValue("@search", "%" + searchString + "%");
-
             MySqlDataReader ItemsData = command.ExecuteReader();
-
             while (ItemsData.Read())
             {
                 foundItems.Add(new Items()
@@ -58,7 +56,6 @@ namespace Shop_Тепляков.Data.DataBase
                     Category = ItemsData.IsDBNull(5) ? null : Categorys.FirstOrDefault(x => x.Id == ItemsData.GetInt32(5))
                 });
             }
-
             MySqlConnection.Close();
             return foundItems;
         }

@@ -10,7 +10,17 @@
     <body>
         <div class="header">
             <img src="~/img/icon.png"/>
-            <input class="search" placeholder="Поиск по сайту"/>
+            <input class="search" id="search" placeholder="Поиск по сайту"/>
+            <button onclick="UpdateUrl()">Поиск</button>
+            <script>
+                
+                function UpdateUrl() {
+                    var search = document.getElementById('search').value;
+                    var currentLocation = window.location;
+                    var flag = currentLocation.toString().toLowerCase().includes("items");
+                    window.location = `/${flag ? "Items" : "Categorys"}/List?search=` + search;
+                }
+            </script>
             <img class="basket" src="~/img/ic-basket.png"/>
         </div>
         <div>
