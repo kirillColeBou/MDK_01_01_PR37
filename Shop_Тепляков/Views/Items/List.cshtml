@@ -21,9 +21,28 @@
             }
         }
     </select>
+    <select id="sortedBy" onchange="SortByPrice(this)">
+        <option value="0">Выбрать ...</option>
+        <option value="asc" <%=(Request.QueryString["sortBy"] == "asc") ? "selected" : ""></%>По возрастанию цены</option>
+        <option value="desc" <%=(Request.QueryString["sortBy"] == "desc") ? "selected" : ""></%>По убыванию цены</option>
+    </select>
     <script>
-        function SelectCategory(sender){
+        function saveSortBy(value) {
+            localStorage.setItem('sortBy', value);
+        }
+        function SelectCategory(sender) {
             window.location = "/Items/List?id=" + sender.value;
+        }
+        window.onload = function () {
+            var sortBy = localStorage.getItem('sortBy');
+            if (sortBy) {
+                document.getElementById('sortedBy').value = sortBy;
+            }
+        }
+        function SortByPrice(sender) {
+            var SortBy = sender.value;
+            saveSortBy(SortBy);
+            window.location = "/Items/List?sortBy=" + SortBy;
         }
     </script>
 </div>
@@ -37,7 +56,7 @@
             <div class="data">
                 <h3>Модель: @item.Name</h3>
                 <p>Цена: @item.Price.ToString("c")</p>
-                <p>Категория @item.Category.Name</p>
+                <p>Категория: @item.Category.Name</p>
                 <div>Описание: @item.Description</div>
             </div>
         </div>

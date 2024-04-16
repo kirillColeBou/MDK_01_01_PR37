@@ -14,7 +14,7 @@ namespace Shop_Тепляков.Data.DataBase
             {
                 List<Models.Categorys> categorys = new List<Models.Categorys>();
                 MySqlConnection MySqlConnection = Common.Connection.MySqlOpen();
-                MySqlDataReader CategorysReader = Common.Connection.MySqlQuery("Select * from pr38.Categorys Order By 'Name';", MySqlConnection);
+                MySqlDataReader CategorysReader = Common.Connection.MySqlQuery("Select * from Categorys Order By 'Name';", MySqlConnection);
                 while (CategorysReader.Read())
                 {
                     categorys.Add(new Models.Categorys()
