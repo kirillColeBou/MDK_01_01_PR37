@@ -14,7 +14,7 @@ namespace Shop_Тепляков.Data.DataBase
         {
             List<Categorys> foundCategorys = new List<Categorys>();
             MySqlConnection MySqlConnection = Connection.MySqlOpen();
-            string query = "SELECT * FROM Shop.Categorys WHERE Name LIKE @search OR Description LIKE @search;";
+            string query = "SELECT * FROM need.categorys WHERE Name LIKE @search OR Description LIKE @search;";
             MySqlCommand command = new MySqlCommand(query, MySqlConnection);
             command.Parameters.AddWithValue("@search", "%" + searchString + "%");
             MySqlDataReader CategorysData = command.ExecuteReader();

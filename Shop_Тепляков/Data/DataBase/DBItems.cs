@@ -40,7 +40,7 @@ namespace Shop_Тепляков.Data.DataBase
         {
             List<Items> foundItems = new List<Items>();
             MySqlConnection MySqlConnection = Connection.MySqlOpen();
-            string query = "SELECT * FROM Shop.Items WHERE Name LIKE @search OR Description LIKE @search;";
+            string query = "SELECT * FROM need.items WHERE Name LIKE @search OR Description LIKE @search;";
             MySqlCommand command = new MySqlCommand(query, MySqlConnection);
             command.Parameters.AddWithValue("@search", "%" + searchString + "%");
             MySqlDataReader ItemsData = command.ExecuteReader();

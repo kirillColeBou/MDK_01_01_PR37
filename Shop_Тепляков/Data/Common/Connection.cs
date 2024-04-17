@@ -8,7 +8,7 @@ namespace Shop_Тепляков.Data.Common
 {
     public class Connection
     {
-        readonly static string ConnectionData = "server=127.0.0.1;port=3306;database=Shop;uid=root;";
+        readonly static string ConnectionData = "server=127.0.0.1;port=3306;database=need;uid=root;";
 
         public static MySqlConnection MySqlOpen()
         {

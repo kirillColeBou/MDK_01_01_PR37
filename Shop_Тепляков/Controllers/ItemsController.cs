@@ -2,6 +2,7 @@
 using Shop_Тепляков.Data.DataBase;
 using Shop_Тепляков.Data.Interfaces;
 using Shop_Тепляков.Data.ViewModell;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Shop_Тепляков.Controllers
@@ -36,6 +37,13 @@ namespace Shop_Тепляков.Controllers
             VMItem.Categorys = IAllCategorys.AllCategorys;
             VMItem.SelectCategory = id;
             return View(VMItem);
+        }
+
+        [HttpGet]
+        public ViewResult Add()
+        {
+            IEnumerable<Data.Models.Categorys> Categorys = IAllCategorys.AllCategorys;
+            return View(Categorys);
         }
     }
 }
