@@ -6,6 +6,7 @@ namespace Shop_Тепляков.Data.Interfaces
 {
     public interface IItems
     {
-        public IEnumerable<Models.Items> AllItems { get; }
+        public IEnumerable<Items> AllItems { get; }
+        public int Add(Items item);
     }
 }
