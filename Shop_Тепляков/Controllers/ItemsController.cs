@@ -70,7 +70,42 @@ namespace Shop_Тепляков.Controllers
             newItems.Category = new Categorys() { Id = idCategory };
             int id = IAllItems.Add(newItems);
             return Redirect("/Items/Update&id=" + id);
+        }
 
+        [HttpPost]
+        public IActionResult Delete(int itemId)
+        {
+            IAllItems.Delete(itemId);
+            return RedirectToAction("List", "Items");
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            ViewBag.Categories = IAllCategorys.AllCategorys;
+            var EditItem = IAllItems.AllItems.FirstOrDefault(i => i.Id == id);
+            if (EditItem == null) return NotFound();
+            return View(EditItem);
+        }
+
+        [HttpPost]
+        public RedirectResult Update(int itemId, string name, string description, IFormFile files, float price, int idCategory)
+        {
+            Items itemToUpdate = new Items();
+            itemToUpdate.Id = itemId;
+            itemToUpdate.Name = name;
+            itemToUpdate.Description = description;
+            if (files != null)
+            {
+                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
+                var filePath = Path.Combine(uploads, files.FileName);
+                files.CopyTo(new FileStream(filePath, FileMode.Create));
+                itemToUpdate.Img = files.FileName;
+            }
+            itemToUpdate.Price = Convert.ToInt32(price);
+            itemToUpdate.Category = new Categorys() { Id = idCategory };
+            IAllItems.Update(itemToUpdate);
+            return Redirect("/Items/Update&id=" + itemId);
         }
     }
 }
