@@ -59,5 +59,22 @@ namespace Shop_Тепляков.Data.DataBase
             MySqlConnection.Close();
             return foundItems;
         }
+
+        public int Add(Items item)
+        {
+            MySqlConnection MySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery($"Insert into 'items'('Name', 'Description', 'Img', 'Price', 'IdCategory') Values ('{item.Name}', '{item.Description}', '{item.Img}', {item.Price}, {item.Category.Id});", MySqlConnection);
+            MySqlConnection.Close();
+            int IdItem = -1;
+            MySqlConnection = Connection.MySqlOpen();
+            MySqlDataReader mySqlDataReaderItem = Connection.MySqlQuery($"Select 'Id' from 'items' where 'Name' = '{item.Name}' and 'Description' = '{item.Description}' and 'Price' = {item.Price} and 'IdCategory' = {item.Category.Id};", MySqlConnection);
+            if (mySqlDataReaderItem.HasRows)
+            {
+                mySqlDataReaderItem.Read();
+                IdItem = mySqlDataReaderItem.GetInt32(0);
+            }
+            MySqlConnection.Close();
+            return IdItem;
+        }
     }
 }
