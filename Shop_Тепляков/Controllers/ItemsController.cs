@@ -49,7 +49,7 @@ namespace Shop_Тепляков.Controllers
         [HttpGet]
         public ViewResult Add()
         {
-            IEnumerable<Data.Models.Categorys> Categorys = IAllCategorys.AllCategorys;
+            IEnumerable<Categorys> Categorys = IAllCategorys.AllCategorys;
             return View(Categorys);
         }
 
@@ -80,32 +80,34 @@ namespace Shop_Тепляков.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public IActionResult Edit(int id)
         {
             ViewBag.Categories = IAllCategorys.AllCategorys;
-            var EditItem = IAllItems.AllItems.FirstOrDefault(i => i.Id == id);
-            if (EditItem == null) return NotFound();
-            return View(EditItem);
+            var editItem = IAllItems.AllItems.FirstOrDefault(i => i.Id == id);
+            if (editItem == null) return NotFound();
+            return View(editItem);
         }
 
         [HttpPost]
-        public RedirectResult Update(int itemId, string name, string description, IFormFile files, float price, int idCategory)
+        public IActionResult Edit(Items item, IFormFile imageFile, int idCategory)
         {
-            Items itemToUpdate = new Items();
-            itemToUpdate.Id = itemId;
-            itemToUpdate.Name = name;
-            itemToUpdate.Description = description;
-            if (files != null)
+            if (ModelState.IsValid)
             {
-                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
-                var filePath = Path.Combine(uploads, files.FileName);
-                files.CopyTo(new FileStream(filePath, FileMode.Create));
-                itemToUpdate.Img = files.FileName;
+                if (imageFile != null)
+                {
+                    var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine(uploads, fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        imageFile.CopyTo(fileStream);
+                    }
+                    item.Img = fileName;
+                }
+                IAllItems.Update(item, idCategory);
+                return RedirectToAction("List", "Items");
             }
-            itemToUpdate.Price = Convert.ToInt32(price);
-            itemToUpdate.Category = new Categorys() { Id = idCategory };
-            IAllItems.Update(itemToUpdate);
-            return Redirect("/Items/Update&id=" + itemId);
+            return View(item);
         }
     }
 }

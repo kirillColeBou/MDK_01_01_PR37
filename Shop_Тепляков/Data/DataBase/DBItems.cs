@@ -85,7 +85,7 @@ namespace Shop_Тепляков.Data.DataBase
             mySqlConnection.Close();
         }
 
-        public void Update(Items Item)
+        public void Update(Items Item, int categId)
         {
             MySqlConnection mySqlConnection = Connection.MySqlOpen();
             MySqlDataReader CategoryId = Connection.MySqlQuery(
@@ -98,7 +98,7 @@ namespace Shop_Тепляков.Data.DataBase
             }
             mySqlConnection.Close();
             mySqlConnection.Open();
-            Connection.MySqlQuery($"UPDATE items SET Name = '{Item.Name}', Description = '{Item.Description}', Img = '{Item.Img}', Price = '{Item.Price}', IdCategory = '{newCategoryId}' WHERE Id = {Item.Id}", mySqlConnection);
+            Connection.MySqlQuery($"UPDATE items SET Name = '{Item.Name}', Description = '{Item.Description}', Img = '{Item.Img}', Price = '{Item.Price}', IdCategory = '{categId}' WHERE Id = {Item.Id}", mySqlConnection);
             mySqlConnection.Close();
         }
     }

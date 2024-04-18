@@ -9,6 +9,6 @@ namespace Shop_Тепляков.Data.Interfaces
         public IEnumerable<Items> AllItems { get; }
         public int Add(Items item);
         public void Delete(int id);
-        public void Update(Items Item);
+        public void Update(Items Item, int categId);
     }
 }
