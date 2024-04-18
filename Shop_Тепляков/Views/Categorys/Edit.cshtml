@@ -1,0 +1,17 @@
+﻿@using Shop_Тепляков.Data.Models
+@model Shop_Тепляков.Data.Models.Categorys
+@{
+    Layout = "_Layout";
+}
+<h2>Изменение категории</h2>
+<form method="post" enctype="multipart/form-data">
+    <div>
+        Наименование:
+        <br /><input name="Name" value="@Model.Name" />
+    </div>
+    <div>
+        Описание:
+        <br /><input name="Description" value="@Model.Description" />
+    </div>
+    <input type="submit" value="Сохранить" />
+</form>

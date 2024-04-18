@@ -7,5 +7,8 @@ namespace Shop_Тепляков.Data.Interfaces
     {
         IEnumerable<Models.Categorys> AllCategorys { get; }
         public IEnumerable<Categorys> FindCategorys (string search);
+        public int Add(Categorys category);
+        public void Delete(int id);
+        public void Update(Categorys category);
     }
 }

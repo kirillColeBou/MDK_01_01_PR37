@@ -74,11 +74,6 @@
                     <input type="hidden" name="idCategory" value="@item.Category" />
                     <a href="/Items/Edit?id=@item.Id">Изменить</a>
                 </form>
-                <script>
-                    function UpdateItem(itemId) {
-                        window.location = "/Items/Edit?id=" + itemId;
-                    }
-                </script>
                 <form class="delete" method="post" action="/Items/Delete">
                     <input type="hidden" name="itemId" value="@item.Id" />
                     <input type="submit" value="Удалить" onclick="DeleteItem()"/>

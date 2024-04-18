@@ -3,6 +3,14 @@
 @{
     Layout = "_Layout";
 }
+<div>
+    <button onclick="AddCategory()">Добавить</button>
+    <script>
+        function AddCategory() {
+            window.location = "/Categorys/Add";
+        }
+    </script>
+</div>
 <h2>Все категории</h2>
 @{
     foreach (var categorys in Model)
@@ -13,5 +21,20 @@
                 <div>Описание: @categorys.Description</div>
             </div>
         </div>
+        <form class="redac" method="post">
+            <input type="hidden" name="id" value="@categorys.Id" />
+            <input type="hidden" name="name" value="@categorys.Name" />
+            <input type="hidden" name="description" value="@categorys.Description" />
+            <a href="/Categorys/Edit?id=@categorys.Id">Изменить</a>
+        </form>
+        <form class="delete" method="post" action="/Categorys/Delete">
+            <input type="hidden" name="categoysId" value="@categorys.Id" />
+            <input type="submit" value="Удалить" onclick="DeleteCategory()" />
+        </form>
+        <script>
+            function DeleteCategory() {
+                alert("Категория удалена!");
+            }
+        </script>
     }
 }

@@ -38,5 +38,37 @@ namespace Shop_Тепляков.Data.DataBase
                 return FindCategorys("");
             }
         }
+
+        public int Add(Categorys category)
+        {
+            MySqlConnection MySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery($"Insert into `categorys` (`Name`, `Description`) Values ('{category.Name}', '{category.Description}');", MySqlConnection);
+            MySqlConnection.Close();
+            int IdItem = -1;
+            MySqlConnection = Connection.MySqlOpen();
+            MySqlDataReader mySqlDataReaderItem = Connection.MySqlQuery($"Select `Id` from `categorys` where `Name` = '{category.Name}' and `Description` = '{category.Description}';", MySqlConnection);
+            if (mySqlDataReaderItem.HasRows)
+            {
+                mySqlDataReaderItem.Read();
+                IdItem = mySqlDataReaderItem.GetInt32(0);
+            }
+            MySqlConnection.Close();
+            return IdItem;
+        }
+
+        public void Delete(int id)
+        {
+            MySqlConnection mySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery(
+                $"DELETE FROM categorys WHERE Id = {id}", mySqlConnection);
+            mySqlConnection.Close();
+        }
+
+        public void Update(Categorys category)
+        {
+            MySqlConnection mySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery($"UPDATE categorys SET Name = '{category.Name}', Description = '{category.Description}' WHERE Id = {category.Id}", mySqlConnection);
+            mySqlConnection.Close();
+        }
     }
 }
