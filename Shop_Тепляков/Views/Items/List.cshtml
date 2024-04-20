@@ -12,11 +12,11 @@
             {
                 if(Category.Id == Model.SelectCategory)
                 {
-                            <option selected="selected" value="@Category.Id">@Category.Name</option>
+                                <option selected="selected" value="@Category.Id">@Category.Name</option>
                 }
                 else
                 {
-                            <option value="@Category.Id">@Category.Name</option>
+                    <option value="@Category.Id">@Category.Name</option>
                 }
             }
         }
@@ -28,92 +28,129 @@
     </select>
     <script>
         function saveSortBy(value) {
-            localStorage.setItem('sortBy', value);
+        localStorage.setItem('sortBy', value);
         }
         function SelectCategory(sender) {
-            window.location = "/Items/List?id=" + sender.value;
+        window.location = "/Items/List?id=" + sender.value;
         }
         window.onload = function () {
-            var sortBy = localStorage.getItem('sortBy');
-            if (sortBy) {
-                document.getElementById('sortedBy').value = sortBy;
-            }
+        var sortBy = localStorage.getItem('sortBy');
+        if (sortBy) {
+        document.getElementById('sortedBy').value = sortBy;
+        }
         }
         function SortByPrice(sender) {
-            var SortBy = sender.value;
-            saveSortBy(SortBy);
-            window.location = "/Items/List?sortBy=" + SortBy;
+        var SortBy = sender.value;
+        saveSortBy(SortBy);
+        window.location = "/Items/List?sortBy=" + SortBy;
         }
     </script>
     <button onclick="AddItem()">Добавить</button>
     <script>
         function AddItem() {
-            window.location = "/Items/Add";
+        window.location = "/Items/Add";
         }
     </script>
-    
+
 </div>
 
 <h2>Все предметы</h2>
 @{
     @foreach (var item in Model.Items)
     {
-                <div class="item">
-                    <img src="@item.Img" />
-                    <div class="basket">
-                        <div class="button" id="@item.Id">В корзину</div>
-                        <div class="count">
-                            <div class="button min">-</div>
-                            <div class="text">1</div>
-                            <div class="button max">+</div>
-                    </div>
-                    <script>
-                        $(".item").children(".basket").children(".button").click(function (){
-                            $(this).parent().children(".count").show();
-                            $(this).hide();
-                            $.ajax({
-                                url: '@Url.Action("Basket", "Items")',
-                                contentType: "application/json; charset=utf8",
-                                data: { idItem: $(this).attr('id') },
-                                dataType: "json",
-                                success: SuccessBasket,
-                                error: AjaxError
+        <div class="item">
+            <img src="@item.Img" />
+                        <div class="basket">
+                            <div class="button" id="@item.Id">В корзину</div>
+                            <div class="count">
+                                <div class="button min">-</div>
+                                <div class="text">1</div>
+                                <div class="button max">+</div>
+                        </div>
+                        <script>
+                            $(".item").children(".basket").children(".button").click(function (){
+                                $(this).parent().children(".count").show();
+                                $(this).hide();
+                                $.ajax({
+                                    url: '@Url.Action("Basket", "Items")',
+                                    contentType: "application/json; charset=utf8",
+                                    data: { idItem: $(this).attr('id') },
+                                    dataType: "json",
+                                    success: SuccessBasket,
+                                    error: AjaxError
+                                });
                             });
-                        });
 
-                        function SuccessBasket(data) {
-                            console.log(data);
-                        }
+                            $(".count").children(".min").click(function () {
+                                var idItem = $(this).parent().parent().children('.button').attr('id');
+                                var count = $(this).parent().children(".text").text();
+                                count--;
+                                if (count == 0) {
+                                    $(this).parent().parent().children('.button').show();
+                                    $(this).parent().parent().children('.count').hide();
+                                } else {
+                                    $(this).parent().children(".text").text(count);
+                                }
 
-                        function AjaxError() {
-                            console.log("Ошибка выполнения ajax!");
-                        }
-                    </script>
+                                $.ajax({
+                                    url: '@Url.Action("BasketCount", "Items")',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: { idItem: idItem, count: count },
+                                    dataType: "json",
+                                    success: SuccessBasket,
+                                    error: AjaxError
+                                });
+                            });
+
+                            $(".count").children(".max").click(function () {
+                                var idItem = $(this).parent().parent().children('.button').attr('id');
+                                var count = $(this).parent().children(".text").text();
+                                count++;
+                                $(this).parent().children(".text").text(count);
+
+                                $.ajax({
+                                    url: '@Url.Action("BasketCount", "Items")',
+                                    contentType: "application/json; charset=utf-8",
+                                    data: { idItem: idItem, count: count },
+                                    dataType: "json",
+                                    success: SuccessBasket,
+                                    error: AjaxError
+                                });
+                            });
+
+                            function SuccessBasket(data) {
+                                console.log(data);
+                            }
+
+                            function AjaxError() {
+                                console.log("Ошибка выполнения ajax!");
+                            }
+                        </script>
+                        </div>
+                        <div class="data">
+                            <h3>Модель: @item.Name</h3>
+                            <p>Цена: @item.Price.ToString("c")</p>
+                            <p>Категория: @item.Category.Name</p>
+                            <div>Описание: @item.Description</div>
+                        </div>
+                        <form class="redac" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="name" value="@item.Name" />
+                            <input type="hidden" name="description" value="@item.Description" />
+                            <input type="hidden" name="img" value="@item.Img" />
+                            <input type="hidden" name="price" value="@item.Price" />
+                            <input type="hidden" name="idCategory" value="@item.Category" />
+                            <a href="/Items/Edit?id=@item.Id">Изменить</a>
+                        </form>
+                        <form class="delete" method="post" action="/Items/Delete">
+                            <input type="hidden" name="itemId" value="@item.Id" />
+                            <input type="submit" value="Удалить" onclick="DeleteItem()"/>
+                        </form>
+                        <script>
+                            function DeleteItem() {
+                                alert("Товар удален!");
+                            }
+                        </script>
                     </div>
-                    <div class="data">
-                        <h3>Модель: @item.Name</h3>
-                        <p>Цена: @item.Price.ToString("c")</p>
-                        <p>Категория: @item.Category.Name</p>
-                        <div>Описание: @item.Description</div>
-                    </div>
-                    <form class="redac" method="post">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <input type="hidden" name="name" value="@item.Name" />
-                        <input type="hidden" name="description" value="@item.Description" />
-                        <input type="hidden" name="img" value="@item.Img" />
-                        <input type="hidden" name="price" value="@item.Price" />
-                        <input type="hidden" name="idCategory" value="@item.Category" />
-                        <a href="/Items/Edit?id=@item.Id">Изменить</a>
-                    </form>
-                    <form class="delete" method="post" action="/Items/Delete">
-                        <input type="hidden" name="itemId" value="@item.Id" />
-                        <input type="submit" value="Удалить" onclick="DeleteItem()"/>
-                    </form>
-                    <script>
-                        function DeleteItem() {
-                            alert("Товар удален!");
-                        }
-                    </script>
-                </div>
     }
 }

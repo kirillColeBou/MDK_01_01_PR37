@@ -46,6 +46,12 @@ namespace Shop_Тепляков.Controllers
             return View(VMItem);
         }
 
+        public ActionResult Basket(int idItem = -1)
+        {
+            if (idItem != -1) Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.First(x => x.Id == idItem)));
+            return Json(Startup.BasketItem);
+        }
+
         [HttpGet]
         public ViewResult Add()
         {

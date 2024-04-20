@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop_Тепляков.Data.Interfaces;
+using Shop_Тепляков.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace Shop_Тепляков
 {
     public class Startup
     {
-        
+        public static List<ItemsBasket> BasketItem = new List<ItemsBasket>();
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ICategorys, Data.DataBase.DBCategory>();
