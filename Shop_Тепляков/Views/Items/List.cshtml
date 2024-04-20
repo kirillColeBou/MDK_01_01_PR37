@@ -67,65 +67,61 @@
                                 <div class="text">1</div>
                                 <div class="button max">+</div>
                         </div>
-                        <script>
-                            $(".item").children(".basket").children(".button").click(function (){
-                                $(this).parent().children(".count").show();
-                                $(this).hide();
-                                $.ajax({
-                                    url: '@Url.Action("Basket", "Items")',
-                                    contentType: "application/json; charset=utf8",
-                                    data: { idItem: $(this).attr('id') },
-                                    dataType: "json",
-                                    success: SuccessBasket,
-                                    error: AjaxError
-                                });
-                            });
+                <script>
+                    $(".item").children(".basket").children(".button").click(function () {
+                        $(this).parent().children(".count").show();
+                        $(this).hide();
+                        $.ajax({
+                            url: '@Url.Action("Basket", "Items")',
+                            contentType: "application/json; charset=utf-8",
+                            data: { idItem: $(this).attr('id') },
+                            dataType: "json",
+                            success: SuccessBasket,
+                            error: AjaxError
+                        });
+                    });
 
-                            $(".count").children(".min").click(function () {
-                                var idItem = $(this).parent().parent().children('.button').attr('id');
-                                var count = $(this).parent().children(".text").text();
-                                count--;
-                                if (count == 0) {
-                                    $(this).parent().parent().children('.button').show();
-                                    $(this).parent().parent().children('.count').hide();
-                                } else {
-                                    $(this).parent().children(".text").text(count);
-                                }
+                    $(".count").children(".min").click(function () {
+                        var idItem = $(this).parent().parent().children('.button').attr('id');
+                        var count = $(this).parent().children(".text").text();
+                        count--;
+                        if (count == 0) {
+                            $(this).parent().parent().children('.button').show();
+                            $(this).parent().parent().children('.count').hide();
+                        } else {
+                            $(this).parent().children(".text").text(count);
+                        }
 
-                                $.ajax({
-                                    url: '@Url.Action("BasketCount", "Items")',
-                                    contentType: "application/json; charset=utf-8",
-                                    data: { idItem: idItem, count: count },
-                                    dataType: "json",
-                                    success: SuccessBasket,
-                                    error: AjaxError
-                                });
-                            });
+                        $.ajax({
+                            url: '@Url.Action("BasketCount", "Items")',
+                            contentType: "application/json; charset=utf-8",
+                            data: { idItem: idItem, count: count },
+                            dataType: "json",
+                            success: SuccessBasket,
+                            error: AjaxError
+                        });
+                    });
 
-                            $(".count").children(".max").click(function () {
-                                var idItem = $(this).parent().parent().children('.button').attr('id');
-                                var count = $(this).parent().children(".text").text();
-                                count++;
-                                $(this).parent().children(".text").text(count);
+                    $(".count").children(".max").click(function () {
+                        var idItem = $(this).parent().parent().children('.button').attr('id');
+                        var count = $(this).parent().children(".text").text();
+                        count++;
+                        $(this).parent().children(".text").text(count);
 
-                                $.ajax({
-                                    url: '@Url.Action("BasketCount", "Items")',
-                                    contentType: "application/json; charset=utf-8",
-                                    data: { idItem: idItem, count: count },
-                                    dataType: "json",
-                                    success: SuccessBasket,
-                                    error: AjaxError
-                                });
-                            });
+                        $.ajax({
+                            url: '@Url.Action("BasketCount", "Items")',
+                            contentType: "application/json; charset=utf-8",
+                            data: { idItem: idItem, count: count },
+                            dataType: "json",
+                            success: SuccessBasket,
+                            error: AjaxError
+                        });
+                    });
 
-                            function SuccessBasket(data) {
-                                console.log(data);
-                            }
-
-                            function AjaxError() {
-                                console.log("Ошибка выполнения ajax!");
-                            }
-                        </script>
+                    function AjaxError() {
+                        console.log("Ошибка выполнения ajax");
+                    }
+                </script>
                         </div>
                         <div class="data">
                             <h3>Модель: @item.Name</h3>

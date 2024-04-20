@@ -48,7 +48,7 @@ namespace Shop_Тепляков.Controllers
 
         public ActionResult Basket(int idItem = -1)
         {
-            if (idItem != -1) Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.First(x => x.Id == idItem)));
+            if (idItem != -1) Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.Where(x => x.Id == idItem).First()));
             return Json(Startup.BasketItem);
         }
 
@@ -57,7 +57,7 @@ namespace Shop_Тепляков.Controllers
             if (idItem != -1)
             {
                 if (count == 0) Startup.BasketItem.Remove(Startup.BasketItem.Find(x => x.Id == idItem));
-                else Startup.BasketItem.Find(x => x.Id == idItem).count = count;
+                
             }
             return Json(Startup.BasketItem);
         }
