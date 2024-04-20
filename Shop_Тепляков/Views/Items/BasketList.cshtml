@@ -1,0 +1,23 @@
+﻿@using Shop_Тепляков.Data.ViewModell
+@model VMItems
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Корзина</h2>
+
+@{
+    foreach (var item in Model.ItemsBaskets)
+    {
+        <div class="item">
+            <img src="/img/@item.items.Img" alt="@item.items.Img" />
+            <div class="data">
+                <h3>Модель: @item.items.Name</h3>
+                <p>Цена: @item.items.Price.ToString("c")</p>
+                <p>Количество: @item.Count</p>
+                <div>Описание: @item.items.Description</div>
+            </div>
+        </div>
+    }
+}

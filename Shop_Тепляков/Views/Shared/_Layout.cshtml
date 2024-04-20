@@ -22,6 +22,37 @@
                 }
             </script>
             <img class="basket" src="~/img/ic-basket.png"/>
+        <a id="dynamicLink" href="@Url.Action("BasketList", "Items")">Корзина</a>
+
+        <script>
+            $(document).ready(function () {
+                var currentUrl = window.location.href;
+                if (currentUrl.includes("BasketList")) {
+                    $("#dynamicLink").attr("href", "@Url.Action("List", "Items")");
+                    $("#dynamicLink").text("Назад");
+                }
+            });
+        </script>
+
+            <div id="CountItems" class="ItemsCount">0</div>
+            <script>
+                $(document).ready(function () {
+                    updateBasketCount();
+                });
+                function updateBasketCount() {
+                    $.ajax({
+                        url: '/Items/BasketCount',
+                        type: 'GET',
+                        success: function (data) {
+                            $('#CountItems').text(data.itemsCount);
+                        }
+                    });
+                }
+                function SuccessBasket(data) {
+                    console.log(data);
+                    updateBasketCount();
+                }
+            </script>
         </div>
         <div>
             @RenderBody()

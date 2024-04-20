@@ -18,6 +18,7 @@ namespace Shop_Тепляков.Controllers
         private IItems IAllItems;
         private ICategorys IAllCategorys;
         VMItems VMItem = new VMItems();
+        int countItemsInBasket;
 
         public ItemsController(IItems IAllItems, ICategorys IAllCategorys, IHostingEnvironment environment)
         {
@@ -28,6 +29,8 @@ namespace Shop_Тепляков.Controllers
 
         public ViewResult List(int id = 0, string sortBy = "0", string search = "")
         {
+            countItemsInBasket = 0;
+            Json(new { itemsCount = 0 });
             ViewBag.Title = "Страница с предметами";
             var items = IAllItems.AllItems;
             if (id != 0) items = items.Where(i => i.Category.Id == id);
@@ -46,20 +49,11 @@ namespace Shop_Тепляков.Controllers
             return View(VMItem);
         }
 
-        public ActionResult Basket(int idItem = -1)
+        public ViewResult BasketList()
         {
-            if (idItem != -1) Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.Where(x => x.Id == idItem).First()));
-            return Json(Startup.BasketItem);
-        }
-
-        public ActionResult BasketCount(int idItem = -1, int count = -1)
-        {
-            if (idItem != -1)
-            {
-                if (count == 0) Startup.BasketItem.Remove(Startup.BasketItem.Find(x => x.Id == idItem));
-                
-            }
-            return Json(Startup.BasketItem);
+            ViewBag.Title = "Корзина";
+            VMItem.ItemsBaskets = Startup.BasketItem;
+            return View(VMItem);
         }
 
         [HttpGet]
@@ -124,6 +118,23 @@ namespace Shop_Тепляков.Controllers
                 return RedirectToAction("List", "Items");
             }
             return View(item);
+        }
+
+        public ActionResult Basket(int idItem = -1)
+        {
+            if (idItem != -1) Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.Where(x => x.Id == idItem).First()));
+            return Json(Startup.BasketItem);
+        }
+
+        public ActionResult BasketCount(int idItem = -1, int count = -1)
+        {
+            if (idItem != -1)
+            {
+                if (count == 0) Startup.BasketItem.Remove(Startup.BasketItem.Find(x => x.Id == idItem));
+                else Startup.BasketItem.Find(x => x.Id == idItem).Count = count;
+            }
+            countItemsInBasket = Startup.BasketItem.Sum(x => x.Count);
+            return Json(new { itemsCount = countItemsInBasket });
         }
     }
 }
